@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import {
-  // NativeModules,
-  // NativeEventEmitter,
-  TVEventHandler,
-} from 'react-native';
+
+//@ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/issues/41229
+import { TVEventHandler } from 'react-native';
 
 const useTVRemoteHandler = (callback: any, filterEvents = ['focus']) => {
   let tvEventHandler: any = null;
@@ -38,17 +36,5 @@ const useTVRemoteHandler = (callback: any, filterEvents = ['focus']) => {
 
   return {};
 };
-
-// const useTVRemoteHandler = (callback) => {
-//   useEffect(() => {
-//     const { TvRemoteHandler } = NativeModules;
-//     const event = new NativeEventEmitter(TvRemoteHandler);
-//     event.addListener('onKeyDown', (res) => {
-//       console.log('MyEvent', res);
-//     });
-//   });
-
-//   return {};
-// };
 
 export { useTVRemoteHandler };

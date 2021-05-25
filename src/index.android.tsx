@@ -1,11 +1,10 @@
 import { DeviceEventEmitter } from 'react-native';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 function useTVRemoteHandler(callback: any) {
-  let listener: any = null;
-
+  const listener: any = useRef();
   useEffect(() => {
-    listener = DeviceEventEmitter.addListener(
+    listener.current = DeviceEventEmitter.addListener(
       'onKeyDown',
       ({ action, focusedViewId, eventType }) => {
         return callback({
@@ -17,7 +16,7 @@ function useTVRemoteHandler(callback: any) {
     );
 
     return () => {
-      listener.remove();
+      if (listener.current) listener.current.remove();
     };
   });
 
@@ -25,29 +24,3 @@ function useTVRemoteHandler(callback: any) {
 }
 
 export { useTVRemoteHandler };
-
-// function onKeyDownListener(cb: any) {
-//   if (Platform.OS === 'ios') {
-//     const keyEvent = new NativeEventEmitter(TvRemoteHandler);
-//     console.log('keyEvent', keyEvent);
-//     // keyEvent.onKeyDownListener(cb);
-//     keyEvent.addListener('onKeyDownListener');
-//     // const listerner = keyEvent.addListener('onKeyDown', cb);
-//     // listeners.push(listerner);
-//   } else {
-//     const listener = DeviceEventEmitter.addListener('onKeyDown', cb);
-//     listeners.push(listener);
-//   }
-// }
-
-// function removeListeners() {
-//   listeners.forEach((listener: any) => {
-//     listener.remove();
-//   });
-// }
-
-// // export default TVRemoteHandler as TvRemoteHandlerType;
-// export default {
-//   onKeyDownListener,
-//   removeListeners,
-// };
